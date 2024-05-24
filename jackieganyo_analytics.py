@@ -4,10 +4,10 @@ virtual environments, and handling different types of data.
 '''
 # Standard library imports
 import csv
+import encodings
 import os
 import pathlib 
 import json
-import panda as pd
 
 # External library imports (requires virtual environment)
 import requests
@@ -26,7 +26,7 @@ def fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url):
      try:
          #Create folder if it does not exist
         if not os.path.exists(txt_folder_name):
-            os.makedires(txt_folder_name)
+            os.makedirs(txt_folder_name)
         
         # Fetch data from url    
         response = requests.get(txt_url)
@@ -34,7 +34,7 @@ def fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url):
                 
         #Write text data to output file
             output_file_path = os.path.join(txt_folder_name, txt_filename)
-        with open(output_file_path, 'w', endcoding='utf-8') as file:
+        with open(output_file_path, 'w', encoding=utf-8') as file:
             file.write(response.text)
             
         print(f"Text data successfully written to '{output_file_path}'.")
