@@ -4,7 +4,7 @@ virtual environments, and handling different types of data.
 '''
 # Standard library imports
 import csv
-import encodings
+import encoding
 import os
 import pathlib 
 import json
