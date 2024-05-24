@@ -7,11 +7,11 @@ import csv
 import os
 import pathlib 
 import json
+import panda as pd
 
 # External library imports (requires virtual environment)
 import requests
 from collections import Counter
-import panda as pd
 import xlrd
 
 #Data Acquisition using requests library to fetch data from web APIs
