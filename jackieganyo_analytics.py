@@ -34,7 +34,7 @@ def fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url):
                 
         #Write text data to output file
             output_file_path = os.path.join(txt_folder_name, txt_filename)
-        with open(output_file_path, 'w', encoding=utf-8') as file:
+        with open(output_file_path, 'w', encoding='utf-8') as file:
             file.write(response.text)
             
         print(f"Text data successfully written to '{output_file_path}'.")
