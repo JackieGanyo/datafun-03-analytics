@@ -148,7 +148,41 @@ def process_txt_file(txt_folder_name, input_filename, output_filename):
         print(f"Processed data written to '{output_file_path}'")
     except Exception:
         print("Error processing text file.")
+        
+# Function to process csv data
+def process_csv_file(csv_folder_name, input_filename, output_filename):
+    try:
+        input_file_path = os.path.join(csv_folder_name, input_filename)
 
+        # Read input CSV file
+        with open(input_file_path, 'r', encoding='utf-8') as file:
+            csv_reader = csv.reader(file)
+
+            # Read the header to dynamically determine column names
+            header = next(csv_reader)
+
+            # Read data and convert rows to tuples
+            data = [tuple(row) for row in csv_reader]
+
+        # Pandas dataframe for analysis
+        df = pd.DataFrame(data, columns=header)
+
+        # Calculate summary statistics
+        summary_stats = df.describe()
+
+        #convert summary statistics to string
+        summary_stats_str = str(summary_stats)
+
+        # Define output file path
+        output_summary_path = os.path.join(csv_folder_name, output_filename)
+
+        # Write summary statistics to output text file
+        with open(output_summary_path, 'w') as output_file:
+            output_file.write(summary_stats_str)
+        print(f"Summary statistics saved to '{output_summary_path}'")
+    except Exception as e:
+        print(f"Error processing CSV file: {e}")
+        
 # Function to process excel data.  This data set contains information on cattle, 
 # summary statitsics run. 
 def process_excel_file(excel_folder_name, input_filename, output_filename):
@@ -210,3 +244,47 @@ def process_json_file(json_folder_name, input_filename, output_filename):
         
     except Exception as e:
         print(f"Error parsing JSON data: {e}")
+
+#Main Function - Implement a main() function to test the folder creation functions and demonstrate 
+#the use of imported modules.
+def main():
+    ''' Main function to demonstrate module capabilities. '''
+
+    # Print my name
+    name = "Jackie Ganyo"
+    print(f"Name: {name}")
+
+    # URL's where data was pulled
+    txt_url = 'https://www.thecompleteworksofshakespeare.com/tragedy/romeo-and-juliet'
+    csv_url = 'https://raw.githubusercontent.com/MainakRepositor/Datasets/master/World%20Happiness%20Data/2020.csv' 
+    excel_url = 'https://github.com/bharathirajatut/sample-excel-dataset/raw/master/cattle.xls' 
+    json_url = 'http://api.open-notify.org/astros.json'
+    
+    # Folder names
+    txt_folder_name = 'data-txt'
+    csv_folder_name = 'data-csv'
+    excel_folder_name = 'data-excel' 
+    json_folder_name = 'data-json' 
+    
+    # File names
+    txt_filename = 'romeoJuliet.txt'
+    csv_filename = 'countryLadderScore.csv'
+    excel_filename = 'cattle.xls' 
+    json_filename = 'astronauts.json' 
+    
+    # Functions to take web data and convert it to a specified file format
+    fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url)
+    fetch_and_write_csv_data(csv_folder_name, csv_filename,csv_url)
+    fetch_and_write_excel_data(excel_folder_name, excel_filename,excel_url)
+    fetch_and_write_json_data(json_folder_name, json_filename,json_url)
+    
+    # Functons for text processing in different file formats
+    process_txt_file('data-txt', 'romeoJuliet.txt', 'romeoJuliet_analysis.txt')
+    process_csv_file('data-csv', 'countryLadderScore.csv', 'countryLadderScore_analysis.txt')
+    process_excel_file('data-excel', 'cattle.xls', 'cattle_analysis.txt')
+    process_json_file('data-json', 'astronauts.json', 'astronauts_analysis.txt')
+
+#9. Conditional Script Execution (At the end of the file) - Ensure the main function only executes when 
+#the script is run directly, not when imported as a module by using standard boilerplate code.
+if __name__ == '__main__':
+    main()
