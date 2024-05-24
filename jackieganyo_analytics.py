@@ -10,7 +10,7 @@ import pathlib
 import json
 
 # External library imports (requires virtual environment)
-import panda as pd 
+import panda as pd
 import requests
 from collections import Counter
 import xlrd
