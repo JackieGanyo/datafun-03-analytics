@@ -32,15 +32,12 @@ def fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url):
         # Fetch data from url    
         response = requests.get(txt_url)
         if response.status_code == 200:
-                
-        #Write text data to output file
-            output_file_path = os.path.join(txt_folder_name, txt_filename)
-        with open(output_file_path, 'w', encoding='utf-8') as file:
-            file.write(response.content)
-            
-        print(f"Text data successfully written to '{output_file_path}'.")
-     except Exception as e:
-        print(f"Error fetching text data file: {e}")
+            # Write text data to output file
+            with open(os.path.join(txt_folder_name, txt_filename), 'w', encoding='utf-8') as file:
+                file.write(response.text)
+            print(f"Text data successfully written to '{os.path.join(txt_folder_name, txt_filename)}'.")
+        else:
+            print(f"Error fetching text data: {response.status_code}")
    
 # CSV DATA FETCH
      
