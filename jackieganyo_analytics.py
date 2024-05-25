@@ -10,7 +10,7 @@ import pathlib
 import json
 
 # External library imports (requires virtual environment)
-import panda as pd
+import pandas as pd
 import requests
 from collections import Counter
 import xlrd
@@ -50,22 +50,21 @@ def fetch_and_write_csv_data(csv_folder_name, csv_filename, csv_url):
     """
     try:
         # Create the folder if it doesn't exist
-        if not os.path.exists(csv_folder_name):
-            os.makedirs(csv_folder_name)
+            if not os.path.exists(csv_folder_name):
+                os.makedirs(csv_folder_name)
 
-        # Fetch CSV data from the URL
-        response = requests.get(csv_url)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-        
-        # Write CSV data to the output file
-        output_file_path = os.path.join(csv_folder_name, csv_filename)
-        with open(output_file_path, 'wb') as file:
-            file.write(response.content)
-        
-        print(f"CSV data successfully written to '{output_file_path}'.")
-    except Exception as e:
-        print(f"Error fetching or writing CSV data: {e}")
- 
+            # Fetch CSV data from the URL
+            response = requests.get(csv_url)
+            response.raise_for_status()  # Raise an exception for HTTP errors
+            
+            # Write CSV data to the output file
+            output_file_path = os.path.join(csv_folder_name, csv_filename)
+            with open(output_file_path, 'wb') as file:
+                file.write(response.content)
+            
+            print(f"CSV data successfully written to '{output_file_path}'.")
+        except Exception as e:
+            print(f"Error fetching CSV data: {e}")
  # Excel DATA FETCH
  
 def fetch_and_write_excel_data(excel_folder_name, excel_filename, excel_url):
