@@ -1,0 +1,7 @@
+       Country name  ... Dystopia + residual
+count           153  ...                 153
+unique          153  ...                 153
+top         Finland  ...         2.762835026
+freq              1  ...                   1
+
+[4 rows x 20 columns]
