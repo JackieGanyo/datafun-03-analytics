@@ -10,7 +10,7 @@ import pathlib
 import json
 
 # External library imports (requires virtual environment)
-import pandas as pd
+import pandas as pd # type: ignore
 import requests
 from collections import Counter
 import xlrd
@@ -18,14 +18,19 @@ import xlrd
 #Data Acquisition using requests library to fetch data from web APIs
 # Text DATA FETCH
 def fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url):
-     '''
-     Parameters for text data file retrieval
-     -txt_url (str): URL where text file is located
-     -txt_folder_name (str):  Name of text folder where text data will be saved
-     -txt_file (str): Name of text file to be created
-     '''
-     try:
-         #Create folder if it does not exist
+    '''
+    Fetches text data from a given URL and writes it to a text file.
+
+    Parameters:
+    - txt_folder_name (str): Name of the folder where the text file will be saved.
+    - txt_filename (str): Name of the text file to be created.
+    - txt_url (str): The URL of the online text data.
+
+    Returns:
+    None
+    '''
+    try:
+        # Create folder if it does not exist
         if not os.path.exists(txt_folder_name):
             os.makedirs(txt_folder_name)
         
@@ -36,37 +41,40 @@ def fetch_and_write_txt_data(txt_folder_name, txt_filename, txt_url):
             with open(os.path.join(txt_folder_name, txt_filename), 'w', encoding='utf-8') as file:
                 file.write(response.text)
             print(f"Text data successfully written to '{os.path.join(txt_folder_name, txt_filename)}'.")
-        else:
-            print(f"Error fetching text data: {response.status_code}")
-   
+        
+    except Exception as e:
+        print(f"Error fetching or writing text data: {e}")
+        
 # CSV DATA FETCH
-     
 def fetch_and_write_csv_data(csv_folder_name, csv_filename, csv_url):
-    """
-    Parameters for CSV Data Fetch:
-    - csv_folder_name (str): Name of the folder where CSV file will be saved.
-    - csv_filename (str): Name of the CSV file to be created.
-    - csv_url (str): The URL of the online CSV file.
-    """
-    try:
-        # Create the folder if it doesn't exist
-            if not os.path.exists(csv_folder_name):
-                os.makedirs(csv_folder_name)
+    '''
+    Fetches CSV data from a given URL and writes it to a CSV file.
 
-            # Fetch CSV data from the URL
-            response = requests.get(csv_url)
-            response.raise_for_status()  # Raise an exception for HTTP errors
-            
-            # Write CSV data to the output file
-            output_file_path = os.path.join(csv_folder_name, csv_filename)
-            with open(output_file_path, 'wb') as file:
+    Parameters:
+    - csv_folder_name (str): Name of the folder where the CSV file will be saved.
+    - csv_filename (str): Name of the CSV file to be created.
+    - csv_url (str): The URL of the online CSV data.
+
+    Returns:
+    None
+    '''
+    try:
+        # Create folder if it does not exist
+        if not os.path.exists(csv_folder_name):
+            os.makedirs(csv_folder_name)
+        
+        # Fetch data from url
+        response = requests.get(csv_url)
+        if response.status_code == 200:
+            # Write CSV data to output file
+            with open(os.path.join(csv_folder_name, csv_filename), 'wb') as file:
                 file.write(response.content)
-            
-            print(f"CSV data successfully written to '{output_file_path}'.")
-        except Exception as e:
-            print(f"Error fetching CSV data: {e}")
+            print(f"CSV data successfully written to '{os.path.join(csv_folder_name, csv_filename)}'.")
+        
+    except Exception as e:
+        print(f"Error fetching or writing CSV data: {e}")
+        
  # Excel DATA FETCH
- 
 def fetch_and_write_excel_data(excel_folder_name, excel_filename, excel_url):
     """
     Parameters for Excel Data Fetch:
